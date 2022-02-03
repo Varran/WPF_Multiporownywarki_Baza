@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace WPF_multi_próby
 {
+    //https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF
+
     public class ViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<MixedPaint> mixedPaints;
