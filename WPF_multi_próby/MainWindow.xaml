@@ -55,7 +55,7 @@
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="180"/>
+                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="200"/>
                     </GridView>
                 </ListView.View>
             </ListView>
