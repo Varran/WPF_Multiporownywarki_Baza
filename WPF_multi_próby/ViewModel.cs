@@ -10,74 +10,74 @@ namespace WPF_multi_próby
 {
     public class ViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<ZmieszanaFarba> mieszaniny;
-        public ObservableCollection<ZmieszanaFarba> Mieszaniny { get { return mieszaniny; } }
+        private ObservableCollection<MixedPaint> mixedPaints;
+        public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
 
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged(string nazwa)
+        private void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(nazwa));
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        private ZmieszanaFarba zaznaczonaFarba;
-        public ZmieszanaFarba ZaznaczonaFarba {
-            get { return zaznaczonaFarba; }
-            set { zaznaczonaFarba = value;
-                OnPropertyChanged(nameof(ZaznaczonaFarba)); } }
+        private MixedPaint selectedMixedPaint;
+        public MixedPaint SelectedMixedPaint {
+            get { return selectedMixedPaint; }
+            set { selectedMixedPaint = value;
+                OnPropertyChanged(nameof(SelectedMixedPaint)); } }
 
-        private ObservableCollection<LiniaPorownania> matrycaPorownan;
-        public ObservableCollection<LiniaPorownania> MatrycaPorownan  { get { return matrycaPorownan; } }
+        private ObservableCollection<MatrixLine> comparisonMatrix;
+        public ObservableCollection<MatrixLine> ComparisonMatrix  { get { return comparisonMatrix; } }
 
         public ViewModel()
         {
-            Kolor zoltyA = new Kolor("ŻółtyA", 110);
-            Kolor zoltyB = new Kolor("ŻółtyB", 175);
-            Kolor niebieskiA = new Kolor("NiebieskiA", 77);
-            Kolor niebieskiB = new Kolor("NiebieskiB", 135);
-            Kolor czerwonyA = new Kolor("CzerwonyA", 95);
-            Kolor czerwonyB = new Kolor("CzerwonyB", 225);
-            Kolor bialyA = new Kolor("BiałyA", 200);
+            ColorBase yellowA = new ColorBase("YellowA", 110);
+            ColorBase yellowB = new ColorBase("YellowB", 175);
+            ColorBase blueA = new ColorBase("BlueA", 77);
+            ColorBase blueB = new ColorBase("BlueB", 135);
+            ColorBase redA = new ColorBase("RedA", 95);
+            ColorBase redB = new ColorBase("RedB", 225);
+            ColorBase whiteA = new ColorBase("WhiteA", 200);
 
-            ZmieszanaFarba zielonyA = new ZmieszanaFarba("ZielonyJasny")
-                .DodajSkladnik(zoltyA)
-                .DodajSkladnik(niebieskiA);
-            ZmieszanaFarba zielonyB = new ZmieszanaFarba("ZielonyCiemny")
-                .DodajSkladnik(zoltyB)
-                .DodajSkladnik(niebieskiB);
-            ZmieszanaFarba pomaranczA = new ZmieszanaFarba("PomaranczJasny")
-                .DodajSkladnik(zoltyA)
-                .DodajSkladnik(czerwonyB)
-                .DodajSkladnik(bialyA);
-            ZmieszanaFarba pomaranczB = new ZmieszanaFarba("PomaranczCiemny")
-                .DodajSkladnik(zoltyB)
-                .DodajSkladnik(czerwonyB);
-            ZmieszanaFarba fiolet = new ZmieszanaFarba("Fioler")
-                .DodajSkladnik(czerwonyA)
-                .DodajSkladnik(niebieskiB);
+            MixedPaint greenA = new MixedPaint("GreenLight")
+                .AddIngredient(yellowA)
+                .AddIngredient(blueA);
+            MixedPaint greenB = new MixedPaint("GreenDark")
+                .AddIngredient(yellowB)
+                .AddIngredient(blueB);
+            MixedPaint orangeA = new MixedPaint("OrangeLight")
+                .AddIngredient(yellowA)
+                .AddIngredient(redB)
+                .AddIngredient(whiteA);
+            MixedPaint orangeB = new MixedPaint("OrangeDark")
+                .AddIngredient(yellowB)
+                .AddIngredient(redB);
+            MixedPaint violet = new MixedPaint("Violet")
+                .AddIngredient(redA)
+                .AddIngredient(blueB);
 
-            mieszaniny = new ObservableCollection<ZmieszanaFarba>() { zielonyA, zielonyB, pomaranczA, pomaranczB, fiolet };
-            ZaznaczonaFarba = zielonyA;
+            mixedPaints = new ObservableCollection<MixedPaint>() { greenA, greenB, orangeA, orangeB, violet };
+            SelectedMixedPaint = greenA;
 
-            List<Kolor> unikalneKolory = new List<Kolor>();
+            List<ColorBase> uniqueColorsBase = new List<ColorBase>();
 
-            foreach (var item in mieszaniny)
-                foreach (var item2 in item.Skladniki)
-                    if (!unikalneKolory.Contains(item2))
-                        unikalneKolory.Add(item2);
+            foreach (var item in mixedPaints)
+                foreach (var item2 in item.Ingredients)
+                    if (!uniqueColorsBase.Contains(item2))
+                        uniqueColorsBase.Add(item2);
 
-            unikalneKolory = unikalneKolory.OrderBy(o => o.Nazwa).ThenBy(o => o.Nasycenie).ToList();
+            uniqueColorsBase = uniqueColorsBase.OrderBy(o => o.Name).ThenBy(o => o.Saturation).ToList();
 
-            matrycaPorownan = new ObservableCollection<LiniaPorownania>();
+            comparisonMatrix = new ObservableCollection<MatrixLine>();
 
-            foreach (var kolor in unikalneKolory)
+            foreach (var color in uniqueColorsBase)
             {
-                LiniaPorownania linia = new LiniaPorownania(kolor);
-                foreach (var mieszanina in mieszaniny)
-                    linia.DodajDoMatrycy(mieszanina);
+                MatrixLine line = new MatrixLine(color);
+                foreach (var mixed in mixedPaints)
+                    line.AddToMatrix(mixed);
 
-                matrycaPorownan.Add(linia);
+                comparisonMatrix.Add(line);
             }
         }
     }

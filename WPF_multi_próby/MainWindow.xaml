@@ -18,45 +18,44 @@
             <RowDefinition Height="150"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <StackPanel Name="ListaMieszanin" 
+        <StackPanel Name="ListOfMixedPaint" 
                     Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="Lista mieszanin:"/>
-            <ListView ItemsSource="{Binding Mieszaniny}" SelectedItem="{Binding ZaznaczonaFarba}" Margin="10">
+            <TextBlock Text="List of MixedPaint:"/>
+            <ListView ItemsSource="{Binding MixedPaints}" SelectedItem="{Binding SelectedMixedPaint}" Margin="10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Nazwa mieszaniny: "/>
-                            <TextBlock Text="{Binding NazwaMieszaniny}" Width="120" FontWeight="Bold"/>
-                            <TextBlock Text="Składników: " Margin="0,0,10,0"/>
-                            <TextBlock Text="{Binding Skladniki.Count}" FontWeight="Bold"/>
+                            <TextBlock Text="PaintName: "/>
+                            <TextBlock Text="{Binding PaintName}" Width="120" FontWeight="Bold"/>
+                            <TextBlock Text="IngradientCount: " Margin="0,0,10,0"/>
+                            <TextBlock Text="{Binding Ingredients.Count}" FontWeight="Bold"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
-        <StackPanel Name="SkladZaznaczonejMieszaniny"
+        <StackPanel Name="BOM"
                     Grid.Column="1" Grid.Row="0">
-            <TextBlock Text="sklad zaznaczonej mieszaniny"/>
-            <ListView ItemsSource="{Binding ZaznaczonaFarba.Skladniki}" Margin="10">
+            <TextBlock Text="Ingredients of selected MixedPaint"/>
+            <ListView ItemsSource="{Binding SelectedMixedPaint.Ingredients}" Margin="10">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Nazwa farby" DisplayMemberBinding="{Binding Nazwa}" Width="100"/>
-                        <GridViewColumn Header="Nasycenie barwy" DisplayMemberBinding="{Binding Nasycenie}" Width="100"/>
+                        <GridViewColumn Header="Color Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
+                        <GridViewColumn Header="Color Saturation" DisplayMemberBinding="{Binding Saturation}" Width="100"/>
                     </GridView>
                 </ListView.View>
             </ListView>
         </StackPanel>
-        <StackPanel Name="MultiporownywarkaMieszanin"
+        <StackPanel Name="MultiComparerOfPaints"
                     Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical">
-            <TextBlock Text="Multiporownywarka mieszanin"/>
-            <ListView ItemsSource="{Binding MatrycaPorownan}" Margin="10" FontFamily="Cascadia Code" >
+            <TextBlock Text="Multicomparer of paints"/>
+            <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
                 <ListView.Resources>
                     
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Unikalny składnik" DisplayMemberBinding="{Binding SkladnikKolor}" Width="180"/>
-                        <GridViewColumn Header="cos" DisplayMemberBinding="{Binding Matryca.Keys}" Width="150"/>
+                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="180"/>
                     </GridView>
                 </ListView.View>
             </ListView>

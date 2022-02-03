@@ -6,57 +6,75 @@ using System.Threading.Tasks;
 
 namespace WPF_multi_próby
 {
-    public class Kolor 
+    public class ColorBase 
     {
-        public string Nazwa { get; }   
-        public int Nasycenie { get; private set; }  
-        public Kolor(string nazwa, int nasycenie)
+        public string Name { get; }   
+        public int Saturation { get; private set; }  
+        public ColorBase(string name, int saturation)
         {
-            this.Nazwa = nazwa;
-            this.Nasycenie = nasycenie;
+            this.Name = name;
+            this.Saturation = saturation;
         }
 
-        public void ZmienNasycenie(int noweNasycenie)
+        public void ChangeSaturation(int newSaturation)
         {
-            Nasycenie = noweNasycenie;
+            Saturation = newSaturation;
         }
 
         public override string ToString()
         {
-            return $"Kolor:{Nasycenie.ToString().PadLeft(4, ' ')} - '{Nazwa}'";
+            return $"ColorBase: {Saturation.ToString().PadLeft(4, ' ')} - '{Name}'";
         }
     }
 
-    public class ZmieszanaFarba
+    public class MixedPaint
     {
-        public string NazwaMieszaniny { get; } 
-        public List<Kolor> Skladniki { get; }
+        public string PaintName { get; } 
+        public List<ColorBase> Ingredients { get; }
 
-        public ZmieszanaFarba(string nazwa)
+        public MixedPaint(string name)
         {
-            Skladniki = new List<Kolor>();
-            this.NazwaMieszaniny= nazwa;
+            Ingredients = new List<ColorBase>();
+            this.PaintName= name;
         }
 
-        public ZmieszanaFarba DodajSkladnik(Kolor kolor)
+        public MixedPaint AddIngredient(ColorBase color)
         {
-            bool czyDodany = false;
+            bool added = false;
 
-            foreach (var item in Skladniki)
+            foreach (var item in Ingredients)
             {
-                if (item.Nazwa == kolor.Nazwa )
+                if (item.Name == color.Name )
                 {
-                    item.ZmienNasycenie(item.Nasycenie + kolor.Nasycenie);
-                    czyDodany = true;
+                    item.ChangeSaturation(item.Saturation + color.Saturation);
+                    added = true;
                 }
             }
 
-            if (!czyDodany)
-                Skladniki.Add(kolor);
+            if (!added)
+                Ingredients.Add(color);
 
             return this;
+        }        
+    }
+
+    public class MatrixLine
+    {
+        public ColorBase ColorIngredient { get; private set; }
+        public Dictionary<string, bool> Matrix;
+
+        public MatrixLine(ColorBase color)
+        {
+            Matrix = new Dictionary<string, bool>();
+            this.ColorIngredient = color;
         }
 
-
+        public void AddToMatrix(MixedPaint mixedPaint)
+        {
+            string paintName = mixedPaint.PaintName;
+            bool doesItContainIgredient = mixedPaint.Ingredients.Any(o => (o.Name == ColorIngredient.Name &&
+                                                                        o.Saturation == ColorIngredient.Saturation));
+            Matrix.Add(paintName, doesItContainIgredient);
+        }
     }
 }
