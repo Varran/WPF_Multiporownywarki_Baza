@@ -6,7 +6,7 @@
         xmlns:mx="clr-namespace:MatrixLib.Matrix;assembly=MatrixLib" 
         xmlns:local="clr-namespace:WPF_multi_próby"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="1000">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -20,6 +20,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
@@ -28,7 +29,7 @@
         </Grid.RowDefinitions>
         <StackPanel Name="ListOfMixedPaint" 
                     Grid.Row="0" Grid.Column="0" Orientation="Vertical">
-            <TextBlock Text="List of MixedPaint:"/>
+            <TextBlock Text="List of MixedPaint:" Margin="15,0,0,0"/>
             <ListView ItemsSource="{Binding MixedPaints}" SelectedItem="{Binding SelectedMixedPaint}" Margin="10">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -44,7 +45,7 @@
         </StackPanel>
         <StackPanel Name="BOM"
                     Grid.Column="1" Grid.Row="0">
-            <TextBlock Text="Ingredients of selected MixedPaint"/>
+            <TextBlock Text="Ingredients of selected MixedPaint" Margin="15,0,0,0"/>
             <ListView ItemsSource="{Binding SelectedMixedPaint.Ingredients}" Margin="10">
                 <ListView.View>
                     <GridView>
@@ -56,7 +57,7 @@
         </StackPanel>
         <StackPanel Name="MultiComparerOfPaints"
                     Grid.Column="0" Grid.Row="1"  Orientation="Vertical">
-            <TextBlock Text="Multicomparer of paints"/>
+            <TextBlock Text="Multicomparer of paints" Margin="15,0,0,0"/>
             <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
                 <ListView.Resources>
 
@@ -71,26 +72,34 @@
 
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <DataGrid Grid.Column="1" Grid.Row="1"  CanUserAddRows="False" >
-            <DataGrid.ItemsSource>
-                <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
-                    <Binding Path="ColumnHeaders"/>
-                    <Binding Path="RowHeaders"/>
-                    <Binding Path="Values"/>
-                </MultiBinding>
-            </DataGrid.ItemsSource>
-        </DataGrid>
+        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+            <TextBlock Text="DataMatrix Stackoverflow" Margin="15,0,0,0"/>
+            <DataGrid   CanUserAddRows="False" Margin="10" >
+                <DataGrid.ItemsSource>
+                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
+                        <Binding Path="ColumnHeaders"/>
+                        <Binding Path="RowHeaders"/>
+                        <Binding Path="Values"/>
+                    </MultiBinding>
+                </DataGrid.ItemsSource>
+            </DataGrid>
+        </StackPanel>
+        
 
         <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
-        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-            <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="5">
-                <mx:MatrixControl.DataContext>
-                    <local:ViewModel />
-                </mx:MatrixControl.DataContext>
-                <mx:MatrixControl.Resources>
-                    <ResourceDictionary Source="PaintMatrixTemplates.xaml" />
-                </mx:MatrixControl.Resources>
-            </mx:MatrixControl>
-        </Grid>
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <TextBlock Text="DataMatrix CodeProject" Margin="15,0,0,0"/>
+            <Grid >
+                <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="5">
+                    <mx:MatrixControl.DataContext>
+                        <local:ViewModel />
+                    </mx:MatrixControl.DataContext>
+                    <mx:MatrixControl.Resources>
+                        <ResourceDictionary Source="PaintMatrixTemplates.xaml" />
+                    </mx:MatrixControl.Resources>
+                </mx:MatrixControl>
+            </Grid>
+        </StackPanel>
+        
     </Grid>
 </Window>

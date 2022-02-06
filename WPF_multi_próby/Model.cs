@@ -53,7 +53,12 @@ namespace WPF_multi_próby
                 Ingredients.Add(color);
 
             return this;
-        }        
+        }
+
+        public override string ToString()
+        {
+            return $"{PaintName} ({Ingredients.Count})";
+        }
     }
 
     public class MatrixLine
@@ -73,6 +78,11 @@ namespace WPF_multi_próby
             bool doesItContainIgredient = mixedPaint.Ingredients.Any(o => (o.Name == ColorIngredient.Name &&
                                                                         o.Saturation == ColorIngredient.Saturation));
             Matrix.Add(paintName, doesItContainIgredient);
+        }
+
+        public override string ToString()
+        {
+            return $"{ColorIngredient.Name}";
         }
     }
 }
