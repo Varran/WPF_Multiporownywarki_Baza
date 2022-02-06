@@ -53,17 +53,17 @@ namespace WPF_multi_próby
             ColorBase redB = new ColorBase("RedB", 225);
             ColorBase whiteA = new ColorBase("WhiteA", 200);
 
-            MixedPaint greenA = new MixedPaint("GreenLight")
+            MixedPaint greenA = new MixedPaint("Green Light")
                 .AddIngredient(yellowA)
                 .AddIngredient(blueA);
-            MixedPaint greenB = new MixedPaint("GreenDark")
+            MixedPaint greenB = new MixedPaint("Green Dark")
                 .AddIngredient(yellowB)
                 .AddIngredient(blueB);
-            MixedPaint orangeA = new MixedPaint("OrangeLight")
+            MixedPaint orangeA = new MixedPaint("Orange Light")
                 .AddIngredient(yellowA)
                 .AddIngredient(redB)
                 .AddIngredient(whiteA);
-            MixedPaint orangeB = new MixedPaint("OrangeDark")
+            MixedPaint orangeB = new MixedPaint("Orange Dark")
                 .AddIngredient(yellowB)
                 .AddIngredient(redB);
             MixedPaint violet = new MixedPaint("Violet")
