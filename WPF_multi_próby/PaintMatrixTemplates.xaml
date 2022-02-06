@@ -1,87 +1,61 @@
 ﻿<ResourceDictionary 
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:mx="clr-namespace:MatrixLib.Matrix;assembly=MatrixLib"
-  >
+  xmlns:mx="clr-namespace:MatrixLib.Matrix;assembly=MatrixLib">
 
     <!-- Shared Resources -->
-    <SolidColorBrush x:Key="BackBrush" Color="Black" />
+    <SolidColorBrush x:Key="BackBrush" Color="#FF7D29B9" />
     <SolidColorBrush x:Key="BorderBrush" Color="DarkGray" />
     <Thickness x:Key="BorderThickness" Left="0" Top="0" Right="0.5" Bottom="0.5" />
-    <SolidColorBrush x:Key="HeaderForeground" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="HeaderForeground" Color="#FFCBD1DE" />
 
-    <!-- MatrixEmptyHeaderItem -->
-    <DataTemplate DataType="{x:Type mx:MatrixEmptyHeaderItem}">
-        <Border Background="DarkGray" />
-    </DataTemplate>
 
     <!-- MatrixColumnHeaderItem -->
     <DataTemplate DataType="{x:Type mx:MatrixColumnHeaderItem}">
-        <Border 
-            Height="100"
-            Background="{StaticResource BackBrush}" 
-            BorderBrush="{StaticResource BorderBrush}" 
-            BorderThickness="{StaticResource BorderThickness}" 
-            Padding="1,1">
-            <TextBlock Text="{Binding Path=ColumnHeader}" Foreground="{StaticResource HeaderForeground}" 
+        <Border Background="{StaticResource BackBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="{StaticResource BorderThickness}" 
+                Padding="1,1" Height="100">
+                    <TextBlock  Text="{Binding Path=ColumnHeader}" 
+                        Foreground="{StaticResource HeaderForeground}" 
                         FontWeight="Bold" TextWrapping="Wrap"
-                        HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom">
                         <TextBlock.RenderTransform>
                             <RotateTransform Angle="290" />
-                </TextBlock.RenderTransform>
-             </TextBlock>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
         </Border>
     </DataTemplate>
 
     <!-- MatrixRowHeaderItem -->
     <DataTemplate DataType="{x:Type mx:MatrixRowHeaderItem}">
-        <Border 
-      Background="{StaticResource BackBrush}" 
-      BorderBrush="{StaticResource BorderBrush}" 
-      BorderThickness="{StaticResource BorderThickness}" 
-      Padding="4,0"
-      >
-            <TextBlock 
-        FontWeight="Bold"
-        Foreground="{StaticResource HeaderForeground}"
-        HorizontalAlignment="Center" 
-        Text="{Binding Path=RowHeader}" 
-        VerticalAlignment="Center" 
-        />
+        <Border Background="{StaticResource BackBrush}" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="{StaticResource BorderThickness}" 
+                Padding="4,0">
+                    <TextBlock  Text="{Binding Path=RowHeader}" 
+                        FontWeight="Bold"
+                        Foreground="{StaticResource HeaderForeground}"
+                        HorizontalAlignment="Left" 
+                        VerticalAlignment="Center"/>
         </Border>
     </DataTemplate>
 
+    <!-- MatrixEmptyHeaderItem -->
+    <DataTemplate DataType="{x:Type mx:MatrixEmptyHeaderItem}">
+        <Border Background="DarkGray" />
+    </DataTemplate>
+    
     <!-- MatrixCellItem -->
     <DataTemplate DataType="{x:Type mx:MatrixCellItem}">
-        <Border 
-      x:Name="bd" 
-      Background="#110000FF" 
-      BorderBrush="{StaticResource BorderBrush}" 
-      BorderThickness="{StaticResource BorderThickness}">
-            <!--<Ellipse 
-        x:Name="ell"
-        Fill="DarkBlue"
-        HorizontalAlignment="Center"
-        Width="16" Height="16"  
-        VerticalAlignment="Center" 
-        />-->
-            <CheckBox 
-        x:Name="cBox"
-        HorizontalAlignment="Center"
-        Width="16" Height="16"  
-        VerticalAlignment="Center" 
-        />
+        <Border x:Name="bd" 
+                Background="#110000FF" 
+                BorderBrush="{StaticResource BorderBrush}" 
+                BorderThickness="{StaticResource BorderThickness}">
+                    <CheckBox x:Name="cBox" IsChecked="{Binding Path=Value, Mode=TwoWay}"
+                        HorizontalAlignment="Center"
+                        Width="16" Height="16"  
+                        VerticalAlignment="Center"/>
         </Border>
-        <DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Path=Value}" Value="True" >
-                <Setter TargetName="cBox" Property="IsChecked" Value="True" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-        <!--<DataTemplate.Triggers>
-            <DataTrigger Binding="{Binding Path=Value}" Value="False">
-                <Setter TargetName="ell" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="bd" Property="Background" Value="White" />
-            </DataTrigger>
-        </DataTemplate.Triggers>-->
     </DataTemplate>
 </ResourceDictionary>

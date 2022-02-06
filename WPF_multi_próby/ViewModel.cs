@@ -45,13 +45,13 @@ namespace WPF_multi_próby
 
         public ViewModel()
         {
-            ColorBase yellowA = new ColorBase("YellowA", 110);
-            ColorBase yellowB = new ColorBase("YellowB", 175);
-            ColorBase blueA = new ColorBase("BlueA", 77);
-            ColorBase blueB = new ColorBase("BlueB", 135);
-            ColorBase redA = new ColorBase("RedA", 95);
-            ColorBase redB = new ColorBase("RedB", 225);
-            ColorBase whiteA = new ColorBase("WhiteA", 200);
+            ColorBase yellowA = new ColorBase("Yellow A", 110);
+            ColorBase yellowB = new ColorBase("Yellow B", 175);
+            ColorBase blueA = new ColorBase("Blue A", 77);
+            ColorBase blueB = new ColorBase("Blue B", 135);
+            ColorBase redA = new ColorBase("Red A", 95);
+            ColorBase redB = new ColorBase("Red B", 225);
+            ColorBase whiteA = new ColorBase("White A", 200);
 
             MixedPaint greenA = new MixedPaint("Green Light")
                 .AddIngredient(yellowA)
