@@ -2,7 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:mx="clr-namespace:MatrixLib.Matrix;assembly=MatrixLib" 
         xmlns:local="clr-namespace:WPF_multi_próby"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="800">
@@ -12,9 +13,9 @@
     <Window.Resources>
         <local:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter"/>
     </Window.Resources>
-    
 
-    
+
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -70,7 +71,6 @@
 
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-
         <DataGrid Grid.Column="0" Grid.Row="2"  CanUserAddRows="False" >
             <DataGrid.ItemsSource>
                 <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
@@ -79,12 +79,16 @@
                     <Binding Path="Values"/>
                 </MultiBinding>
             </DataGrid.ItemsSource>
-            <DataGrid.CellStyle>
-                <Style>
-                    
-                </Style>
-            </DataGrid.CellStyle>
-                
         </DataGrid>
+        <Grid Grid.Row="2" Grid.Column="1">
+            <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" >
+                <mx:MatrixControl.DataContext>
+                    <local:ViewModel />
+                </mx:MatrixControl.DataContext>
+                <mx:MatrixControl.Resources>
+                    <ResourceDictionary Source="PaintMatrixTemplates.xaml" />
+                </mx:MatrixControl.Resources>
+            </mx:MatrixControl>
+        </Grid>
     </Grid>
 </Window>

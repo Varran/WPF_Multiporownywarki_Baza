@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Downloads\WpfMatrixDemo\MatrixLib\MatrixLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="PaintMatrixTemplates.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MatrixLib.Matrix;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,7 +11,7 @@ namespace WPF_multi_próby
 {
     //https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF
 
-    public class ViewModel : INotifyPropertyChanged
+    public class ViewModel : MatrixBase<MatrixLine, MixedPaint>, INotifyPropertyChanged
     {
         private ObservableCollection<MixedPaint> mixedPaints;
         public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
@@ -33,6 +34,11 @@ namespace WPF_multi_próby
                 OnPropertyChanged(nameof(SelectedMixedPaint));
             }
         }
+
+        private ObservableCollection<ObservableCollection<bool>> values;
+        public ObservableCollection<ObservableCollection<bool>> Values { get { return values; } }
+        public ObservableCollection<MatrixLine> RowHeaders { get { return comparisonMatrix; } }
+        public ObservableCollection<MixedPaint> ColumnHeaders { get { return mixedPaints; } }
 
         private ObservableCollection<MatrixLine> comparisonMatrix;
         public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
@@ -98,23 +104,40 @@ namespace WPF_multi_próby
                 }
                 values.Add(oc);
             }
+
+            colorBases = new ColorBase[7];
+            colorBases[0] = yellowA;
+            colorBases[1] = yellowB;
+            colorBases[2] = blueA;
+            colorBases[3] = blueB;
+            colorBases[4] = redA;
+            colorBases[5] = redB;
+            colorBases[6] = whiteA;
+
+            mixedPaints2 = new MixedPaint[5];
+            mixedPaints2[0] = violet;
+            mixedPaints2[1] = greenA;
+            mixedPaints2[2] = greenB;
+            mixedPaints2[3] = orangeA;
+            mixedPaints2[4] = orangeB;
+
+            matrixLines = new MatrixLine[7];
+            for (int i = 0; i < colorBases.Length; i++)
+            {
+                MatrixLine line = new MatrixLine(colorBases[i]);
+                foreach (var mixed in mixedPaints)
+                    line.AddToMatrix(mixed);
+
+                matrixLines[i] = line;
+            }
         }
 
-        public ObservableCollection<MatrixLine> RowHeaders
-        {
-            get { return comparisonMatrix; }
-        }
+        readonly MatrixLine[] matrixLines;
+        readonly MixedPaint[] mixedPaints2;
+        readonly ColorBase[] colorBases;
 
-        public ObservableCollection<MixedPaint> ColumnHeaders
-        {
-            get { return mixedPaints; }
-        }
-
-        private ObservableCollection<ObservableCollection<bool>> values;
-        
-        public ObservableCollection<ObservableCollection<bool>> Values
-        {
-            get { return values; }
-        }
+        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) {  return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
+        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
+        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines;  }        
     }
 }
