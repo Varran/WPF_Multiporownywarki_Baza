@@ -55,7 +55,7 @@
             </ListView>
         </StackPanel>
         <StackPanel Name="MultiComparerOfPaints"
-                    Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Orientation="Vertical">
+                    Grid.Column="0" Grid.Row="1"  Orientation="Vertical">
             <TextBlock Text="Multicomparer of paints"/>
             <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
                 <ListView.Resources>
@@ -71,7 +71,7 @@
 
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <DataGrid Grid.Column="0" Grid.Row="2"  CanUserAddRows="False" >
+        <DataGrid Grid.Column="1" Grid.Row="1"  CanUserAddRows="False" >
             <DataGrid.ItemsSource>
                 <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
                     <Binding Path="ColumnHeaders"/>
@@ -80,8 +80,10 @@
                 </MultiBinding>
             </DataGrid.ItemsSource>
         </DataGrid>
-        <Grid Grid.Row="2" Grid.Column="1">
-            <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" >
+
+        <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
+        <Grid Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+            <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="5">
                 <mx:MatrixControl.DataContext>
                     <local:ViewModel />
                 </mx:MatrixControl.DataContext>
