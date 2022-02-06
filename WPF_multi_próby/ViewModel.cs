@@ -24,13 +24,18 @@ namespace WPF_multi_próby
         }
 
         private MixedPaint selectedMixedPaint;
-        public MixedPaint SelectedMixedPaint {
+        public MixedPaint SelectedMixedPaint
+        {
             get { return selectedMixedPaint; }
-            set { selectedMixedPaint = value;
-                OnPropertyChanged(nameof(SelectedMixedPaint)); } }
+            set
+            {
+                selectedMixedPaint = value;
+                OnPropertyChanged(nameof(SelectedMixedPaint));
+            }
+        }
 
         private ObservableCollection<MatrixLine> comparisonMatrix;
-        public ObservableCollection<MatrixLine> ComparisonMatrix  { get { return comparisonMatrix; } }
+        public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
 
         public ViewModel()
         {
@@ -81,6 +86,35 @@ namespace WPF_multi_próby
 
                 comparisonMatrix.Add(line);
             }
+
+            values = new ObservableCollection<ObservableCollection<bool>>();
+            foreach (var item in comparisonMatrix)
+            {
+                ObservableCollection<bool> oc = new ObservableCollection<bool>();
+
+                foreach (var item2 in item.Matrix)
+                {
+                    oc.Add(item2.Value);
+                }
+                values.Add(oc);
+            }
+        }
+
+        public ObservableCollection<MatrixLine> RowHeaders
+        {
+            get { return comparisonMatrix; }
+        }
+
+        public ObservableCollection<MixedPaint> ColumnHeaders
+        {
+            get { return mixedPaints; }
+        }
+
+        private ObservableCollection<ObservableCollection<bool>> values;
+        
+        public ObservableCollection<ObservableCollection<bool>> Values
+        {
+            get { return values; }
         }
     }
 }

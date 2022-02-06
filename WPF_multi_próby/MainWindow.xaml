@@ -5,10 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_multi_próby"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <local:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -16,6 +19,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
+            <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <StackPanel Name="ListOfMixedPaint" 
@@ -51,7 +55,7 @@
             <TextBlock Text="Multicomparer of paints"/>
             <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
                 <ListView.Resources>
-                    
+
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>
@@ -60,5 +64,32 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
+
+
+        <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
+        <Grid Name="DataGridAsMatrixGrid" 
+              Grid.Column="0" Grid.Row="2" >
+            <DataGrid  CanUserAddRows="False" >
+                <DataGrid.ItemsSource>
+                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
+                        <Binding Path="ColumnHeaders"/>
+                        <Binding Path="RowHeaders"/>
+                        <Binding Path="Values"/>
+                    </MultiBinding>
+                </DataGrid.ItemsSource>
+            </DataGrid>
+        </Grid>
+
+        <ListView Grid.Column="1" Grid.Row="2" >
+            <DataGrid CanUserAddRows="False">
+                <DataGrid.ItemsSource>
+                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
+                        <Binding Path="ColumnHeaders"/>
+                        <Binding Path="RowHeaders"/>
+                        <Binding Path="Values"/>
+                    </MultiBinding>
+                </DataGrid.ItemsSource>
+            </DataGrid>
+        </ListView>
     </Grid>
 </Window>
