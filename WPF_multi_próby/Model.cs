@@ -43,13 +43,11 @@ namespace WPF_multi_próby
             bool added = false;
 
             foreach (var item in Ingredients)
-            {
                 if (item.Name == color.Name )
                 {
                     item.ChangeSaturation(item.Saturation + color.Saturation);
                     added = true;
                 }
-            }
 
             if (!added)
                 Ingredients.Add(color);

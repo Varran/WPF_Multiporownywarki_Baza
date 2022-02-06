@@ -12,6 +12,9 @@
     <Window.Resources>
         <local:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter"/>
     </Window.Resources>
+    
+
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -67,29 +70,21 @@
 
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <Grid Name="DataGridAsMatrixGrid" 
-              Grid.Column="0" Grid.Row="2" >
-            <DataGrid  CanUserAddRows="False" >
-                <DataGrid.ItemsSource>
-                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
-                        <Binding Path="ColumnHeaders"/>
-                        <Binding Path="RowHeaders"/>
-                        <Binding Path="Values"/>
-                    </MultiBinding>
-                </DataGrid.ItemsSource>
-            </DataGrid>
-        </Grid>
 
-        <ListView Grid.Column="1" Grid.Row="2" >
-            <DataGrid CanUserAddRows="False">
-                <DataGrid.ItemsSource>
-                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
-                        <Binding Path="ColumnHeaders"/>
-                        <Binding Path="RowHeaders"/>
-                        <Binding Path="Values"/>
-                    </MultiBinding>
-                </DataGrid.ItemsSource>
-            </DataGrid>
-        </ListView>
+        <DataGrid Grid.Column="0" Grid.Row="2"  CanUserAddRows="False" >
+            <DataGrid.ItemsSource>
+                <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
+                    <Binding Path="ColumnHeaders"/>
+                    <Binding Path="RowHeaders"/>
+                    <Binding Path="Values"/>
+                </MultiBinding>
+            </DataGrid.ItemsSource>
+            <DataGrid.CellStyle>
+                <Style>
+                    
+                </Style>
+            </DataGrid.CellStyle>
+                
+        </DataGrid>
     </Grid>
 </Window>
