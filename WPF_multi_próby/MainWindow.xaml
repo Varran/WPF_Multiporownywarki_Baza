@@ -132,6 +132,19 @@
                         </Setter>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox Name="chkBxSelect" 
+                    HorizontalAlignment="Center" 
+                    VerticalAlignment="Center"
+                  IsChecked="{Binding Path=Select, Mode=TwoWay}">
+                            </CheckBox>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+
+                </DataGridTemplateColumn>
                 <DataGrid.ItemsSource>
                     <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
                         <Binding Path="ColumnHeaders"/>
