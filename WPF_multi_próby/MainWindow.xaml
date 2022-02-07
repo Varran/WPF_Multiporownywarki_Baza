@@ -20,12 +20,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
             <ColumnDefinition Width="420"/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="200"/>
-            <RowDefinition/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="330"/>
         </Grid.RowDefinitions>
         <StackPanel Name="ListOfMixedPaint" 
                     Grid.Row="0" Grid.Column="0" Orientation="Vertical">
@@ -42,9 +40,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackPanel>
-        <StackPanel Name="BOM"
-                    Grid.Column="1" Grid.Row="0">
             <TextBlock Text="Ingredients of selected MixedPaint" Margin="15,0,0,0"/>
             <ListView ItemsSource="{Binding SelectedMixedPaint.Ingredients}" Margin="10">
                 <ListView.View>
@@ -55,24 +50,13 @@
                 </ListView.View>
             </ListView>
         </StackPanel>
-        <StackPanel Name="MultiComparerOfPaints"
-                    Grid.Column="0" Grid.Row="1"  Orientation="Vertical">
-            <TextBlock Text="Multicomparer of paints" Margin="15,0,0,0"/>
-            <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
-                <ListView.Resources>
-
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="200"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+        <StackPanel Name="CreatAndAdd" Grid.Column="1" Grid.Row="0">
+            
         </StackPanel>
 
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Grid.Row="1" Orientation="Vertical">
             <TextBlock Text="DataMatrix Stackoverflow" Margin="15,0,0,0"/>
             <DataGrid   CanUserAddRows="False" Margin="10" >
                 <DataGrid.ItemsSource>
@@ -87,7 +71,7 @@
         
 
         <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+        <StackPanel Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
             <TextBlock Text="DataMatrix CodeProject" Margin="15,0,0,0"/>
             <Grid >
                 <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="5">
@@ -100,6 +84,22 @@
                 </mx:MatrixControl>
             </Grid>
         </StackPanel>
-        
+
+        <!--<StackPanel Name="MultiComparerOfPaints"
+                    Grid.Column="0" Grid.Row="1"  Orientation="Vertical">
+            <TextBlock Text="Multicomparer of paints" Margin="15,0,0,0"/>
+            <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" >
+                <ListView.Resources>
+                    <DataTemplate>
+                        <CheckBox IsChecked="{Binding Matrix.Values}"/>
+                    </DataTemplate>
+                </ListView.Resources>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="200"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>-->
     </Grid>
 </Window>
