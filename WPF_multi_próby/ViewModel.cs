@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace WPF_multi_próby
 {
@@ -13,10 +14,6 @@ namespace WPF_multi_próby
 
     public class ViewModel : MatrixBase<MatrixLine, MixedPaint>, INotifyPropertyChanged
     {
-        private ObservableCollection<MixedPaint> mixedPaints;
-        public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
-
-
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string name)
         {
@@ -24,8 +21,15 @@ namespace WPF_multi_próby
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
 
-        private MixedPaint selectedMixedPaint;
-        public MixedPaint SelectedMixedPaint
+        private ObservableCollection<ColorBase> baseColors;
+        public ObservableCollection<ColorBase> BaseColors { get { return baseColors; } }
+
+        private ObservableCollection<MixedPaint> mixedPaints;
+        public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
+
+
+        private MixedPaint? selectedMixedPaint;
+        public MixedPaint? SelectedMixedPaint
         {
             get { return selectedMixedPaint; }
             set
@@ -43,6 +47,15 @@ namespace WPF_multi_próby
         private ObservableCollection<MatrixLine> comparisonMatrix;
         public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
 
+
+        readonly MatrixLine[] matrixLines;
+        readonly MixedPaint[] mixedPaints2;
+        readonly ColorBase[] colorBases;
+
+        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) { return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
+        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
+        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines; }
+
         public ViewModel()
         {
             ColorBase yellowA = new ColorBase("Yellow A", 110);
@@ -52,6 +65,8 @@ namespace WPF_multi_próby
             ColorBase redA = new ColorBase("Red A", 95);
             ColorBase redB = new ColorBase("Red B", 225);
             ColorBase whiteA = new ColorBase("White A", 200);
+
+            baseColors = new ObservableCollection<ColorBase>() { yellowA, yellowB, blueA, blueB, redA, redB, whiteA };
 
             MixedPaint greenA = new MixedPaint("Green Light")
                 .AddIngredient(yellowA)
@@ -130,14 +145,95 @@ namespace WPF_multi_próby
 
                 matrixLines[i] = line;
             }
+
+            newIgredients = new ObservableCollection<ColorBase>();
         }
 
-        readonly MatrixLine[] matrixLines;
-        readonly MixedPaint[] mixedPaints2;
-        readonly ColorBase[] colorBases;
+        #region  dodawanie nowego koloru
+        private ICommand addNewColorCommand;
+        public ICommand AddNewColorCommand
+        {
+            get
+            {
+                if (addNewColorCommand == null)
+                {
+                    addNewColorCommand = new RelayCommand(AddNewColor, o => !String.IsNullOrEmpty(NewColorName) && !String.IsNullOrEmpty(NewColorSaturation));
+                }
+                return addNewColorCommand;
+            }
+        }
 
-        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) {  return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
-        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
-        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines;  }        
+        private void AddNewColor(object color)
+        {
+            ViewModel vm = color as ViewModel;
+
+            baseColors.Add(new ColorBase(vm.NewColorName, Int32.Parse(vm.NewColorSaturation)));
+        }
+        public string NewColorName { get; set; }
+        public string NewColorSaturation { get; set; }
+        #endregion
+
+        #region dodawanie nowej farbki
+        public string NewMixedPaintName { get; set; }
+        private ObservableCollection<ColorBase> newIgredients;
+        public ObservableCollection<ColorBase> NewIgredients { get { return newIgredients; } }
+        private ColorBase selectedColorToAdd;
+        public ColorBase SelectedColorToAdd
+        {
+            get { return selectedColorToAdd; }
+            set
+            {
+                selectedColorToAdd = value;
+                OnPropertyChanged(nameof(SelectedColorToAdd));
+            }
+        }
+        private ICommand addSelectedColorToNewMixedPaint;
+        public ICommand AddSelectedColorToNewMixedPaint
+        {
+            get
+            {
+                if (addSelectedColorToNewMixedPaint == null)
+                {
+                    addSelectedColorToNewMixedPaint = new RelayCommand(AddNewIgredientToNewMixedPaint, o => selectedColorToAdd != null);
+                }
+                return addSelectedColorToNewMixedPaint;
+            }
+        }
+        private void AddNewIgredientToNewMixedPaint(object o)
+        {
+            if (SelectedColorToAdd != null)
+            {
+                newIgredients.Add(selectedColorToAdd);
+            }
+        }
+
+        private ICommand addNewMixedPaintToListCommand;
+        public ICommand AddNewMixedPaintToListCommand
+        {
+            get
+            {
+                if (addNewMixedPaintToListCommand == null)
+                {
+                    addNewMixedPaintToListCommand = new RelayCommand(AddNewMixedPaintToList, o => !String.IsNullOrEmpty(NewMixedPaintName) && newIgredients.Count>0);
+                }
+                return addNewMixedPaintToListCommand;
+            }
+        }
+        private void AddNewMixedPaintToList(object o)
+        {
+            if (o != null)
+            {
+                ViewModel vm = o as ViewModel;
+
+                MixedPaint mixed = new MixedPaint(vm.NewMixedPaintName);
+                foreach (var item in newIgredients)
+                {
+                    mixed.AddIngredient(item);
+                }
+                mixedPaints.Add(mixed);
+            }
+
+        }
+        #endregion
     }
 }
