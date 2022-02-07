@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="MatrixLib.Matrix.MatrixBase&lt;TRow, TColumn&gt;">
+    <Position X="7" Y="1" Width="4.5" />
+    <Members>
+      <Field Name="_matrixItems" Hidden="true" />
+      <Method Name="BuildMatrix" Hidden="true" />
+      <Method Name="CreateCells" Hidden="true" />
+      <Method Name="CreateColumnHeaders" Hidden="true" />
+      <Method Name="CreateEmptyHeader" Hidden="true" />
+      <Method Name="CreateRowHeaders" Hidden="true" />
+      <Method Name="MatrixBase" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAACAAQIIAAAEAAAAAAAAACAAAAAAAAIAABAAAwAA=</HashCode>
+      <FileName>Matrix\MatrixBase.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MatrixItems" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="MatrixLib.Matrix.MatrixCellItem">
+    <Position X="3" Y="3.25" Width="2" />
+    <Members>
+      <Method Name="MatrixCellItem" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Matrix\MatrixCellItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatrixLib.Matrix.MatrixColumnHeaderItem">
+    <Position X="5.25" Y="3.25" Width="3.25" />
+    <Members>
+      <Method Name="MatrixColumnHeaderItem" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Matrix\MatrixColumnHeaderItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatrixLib.Matrix.MatrixEmptyHeaderItem">
+    <Position X="0.75" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Matrix\MatrixEmptyHeaderItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatrixLib.Matrix.MatrixItemBase">
+    <Position X="1" Y="1" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Matrix\MatrixItemBase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MatrixLib.Matrix.MatrixRowHeaderItem">
+    <Position X="8.75" Y="3.25" Width="2.5" />
+    <Members>
+      <Method Name="MatrixRowHeaderItem" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Matrix\MatrixRowHeaderItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

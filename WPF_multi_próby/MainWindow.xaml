@@ -133,7 +133,7 @@
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 
-                <DataGridTemplateColumn>
+                <!--<DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <CheckBox Name="chkBxSelect" 
@@ -144,7 +144,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
 
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
                 <DataGrid.ItemsSource>
                     <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
                         <Binding Path="ColumnHeaders"/>
@@ -176,9 +176,9 @@
             <TextBlock Text="Multicomparer of paints" Margin="15,0,0,0" FontWeight="Bold"/>
             <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" BorderBrush="Black" BorderThickness="1">
                 <ListView.Resources>
-                    <DataTemplate>
+                    <!--<DataTemplate>
                         <CheckBox IsChecked="{Binding Matrix.Values}"/>
-                    </DataTemplate>
+                    </DataTemplate>-->
                 </ListView.Resources>
                 <ListView.View>
                     <GridView>

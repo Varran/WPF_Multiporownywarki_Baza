@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\WpfMatrixDemo\MatrixLib\MatrixLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="PaintMatrixTemplates.xaml">
       <SubType>Designer</SubType>
     </Page>
