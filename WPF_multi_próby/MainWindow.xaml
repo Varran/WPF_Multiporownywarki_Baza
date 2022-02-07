@@ -63,7 +63,7 @@
                         </GridView>
                     </ListView.View>
                 </ListView>
-                <Button Content="Add new MixedPaint" Grid.Row="2" Grid.Column="1" Margin="60,2,10,2"/>
+                <Button Content="Add new MixedPaint" Grid.Row="2" Grid.Column="1" Margin="50,2,10,2"/>
             </Grid>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="2">
