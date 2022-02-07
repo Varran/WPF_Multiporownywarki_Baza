@@ -12,7 +12,7 @@
     </Window.DataContext>
     <Window.Resources>
         <local:MatrixToDataViewConverter x:Key="MatrixToDataViewConverter"/>
-    </Window.Resources>
+    </Window.Resources> 
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
