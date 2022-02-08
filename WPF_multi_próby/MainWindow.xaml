@@ -115,11 +115,11 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Column="2" Grid.Row="0" Grid.RowSpan="3" Orientation="Vertical">
+        
         
 
         <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
-        <StackPanel Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="1">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
             <TextBlock Text="DataMatrix CodeProject" Margin="15,0,0,0" FontWeight="Bold"/>
             <Grid >
                 <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="10" BorderBrush="Black" BorderThickness="1">
@@ -134,7 +134,7 @@
         </StackPanel>
 
         <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <StackPanel Grid.Column="2" Grid.Row="1" Grid.RowSpan="2" Orientation="Vertical">
+        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical">
             <TextBlock Text="DataMatrix Stackoverflow" Margin="15,0,0,0" FontWeight="Bold"/>
             <DataGrid   CanUserAddRows="False"  Margin="10" BorderBrush="Black" BorderThickness="1">
                 <DataGrid.ColumnHeaderStyle>
@@ -187,6 +187,5 @@
             </ListView>
         </StackPanel>
 
-        </StackPanel>
     </Grid>
 </Window>
