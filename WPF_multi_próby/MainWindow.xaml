@@ -39,9 +39,9 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="MixedPaint name:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
+                <TextBlock Text="MixedPaint name: (string)" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
                 <TextBox Grid.Row="0" Grid.Column=" 1" Text="{Binding NewMixedPaintName}"/>
-                <TextBlock Text="Add igredients:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"/>
+                <TextBlock Text="Add igredients:(List&lt;ColorBase>)" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"/>
                 <ListView ItemsSource="{Binding NewIgredients}" Margin="10" Grid.Row="1" Grid.Column="1">
                     <ListView.View>
                         <GridView>
@@ -80,7 +80,7 @@
                 <TextBlock Text="Adding new Base Color" Margin="15,10,2,10" FontWeight="Bold"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="120"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -88,9 +88,9 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="Color Name:" Grid.Column="0" Grid.Row="0"/>
+                    <TextBlock Text="Color Name: (string)" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NewColorName}"/>
-                    <TextBlock Text="Color Saturation:" Grid.Column="0" Grid.Row="1"/>
+                    <TextBlock Text="Color Saturation: (int)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewColorSaturation}"/>
                     <Button Content="Add New Color" Command="{Binding AddNewColorCommand}" CommandParameter="{Binding}"
                             Grid.Row="2" Grid.Column="1" Margin="100,0,10,0"/>
