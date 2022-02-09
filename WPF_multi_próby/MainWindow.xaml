@@ -6,7 +6,7 @@
         xmlns:mx="clr-namespace:MatrixLib.Matrix;assembly=MatrixLib" 
         xmlns:local="clr-namespace:WPF_multi_próby"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1050">
+        Title="MainWindow" Height="700" Width="600">
     <Window.DataContext>
         <local:ViewModel/>
     </Window.DataContext>
@@ -15,14 +15,13 @@
     </Window.Resources> 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="250"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="270"/>
         </Grid.RowDefinitions>
         
         
@@ -40,8 +39,8 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="MixedPaint name: (string)" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right"/>
-                <TextBox Grid.Row="0" Grid.Column=" 1" Text="{Binding NewMixedPaintName}"/>
-                <TextBlock Text="Add igredients:(List&lt;ColorBase>)" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="0" Grid.Column=" 1" Text="{Binding NewMixedPaintName}" Margin="10,0,10,0"/>
+                <TextBlock Text="Add igredients:(List&lt;ColorBase>)" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" TextWrapping="Wrap" Margin="10,20,10,0"/>
                 <ListView ItemsSource="{Binding NewIgredients}" Margin="10" Grid.Row="1" Grid.Column="1">
                     <ListView.View>
                         <GridView>
@@ -53,7 +52,7 @@
                 <Button Content="Add new MixedPaint" Grid.Row="2" Grid.Column="1" Margin="50,2,10,2" Command="{Binding AddNewMixedPaintToListCommand}" CommandParameter="{Binding}"/>
             </Grid>
             <TextBlock Text="List of MixedPaint:" Margin="15,0,0,0" FontWeight="Bold"/>
-            <ListView ItemsSource="{Binding MixedPaints}" Margin="10" SelectedItem="{Binding SelectedMixedPaint}">
+            <ListView ItemsSource="{Binding GetColumnHeaderValues}" Margin="10" SelectedItem="{Binding SelectedMixedPaint}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -80,7 +79,7 @@
                 <TextBlock Text="Adding new Base Color" Margin="15,10,2,10" FontWeight="Bold"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -89,14 +88,14 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="Color Name: (string)" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NewColorName}"/>
-                    <TextBlock Text="Color Saturation: (int)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewColorSaturation}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding NewColorName}" Margin="10,0,10,0"/>
+                    <TextBlock Text="Color Saturation: (int)" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Right" Margin="0,5,0,0"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NewColorSaturation}" Margin="10,5,10,0"/>
                     <Button Content="Add New Color" Command="{Binding AddNewColorCommand}" CommandParameter="{Binding}"
-                            Grid.Row="2" Grid.Column="1" Margin="100,0,10,0"/>
+                            Grid.Row="2" Grid.Column="1" Margin="10,10,10,0"/>
                 </Grid>
                 <TextBlock Text="All base colors" Margin="15,0,0,0" FontWeight="Bold"/>
-                <ListView ItemsSource="{Binding BaseColors}" SelectedItem="{Binding SelectedColorToAdd}" Margin="10">
+                <ListView ItemsSource="{Binding GetRowHeaderValues}" SelectedItem="{Binding SelectedColorToAdd}" Margin="10">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Color Name" DisplayMemberBinding="{Binding Name}" Width="100"/>
@@ -115,11 +114,8 @@
             </StackPanel>
         </StackPanel>
 
-        
-        
-
         <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
-        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="1">
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <TextBlock Text="DataMatrix CodeProject" Margin="15,0,0,0" FontWeight="Bold"/>
             <Grid >
                 <mx:MatrixControl ItemsSource="{Binding Path=MatrixItems}" Margin="10" BorderBrush="Black" BorderThickness="1">
@@ -132,60 +128,5 @@
                 </mx:MatrixControl>
             </Grid>
         </StackPanel>
-
-        <!--https://stackoverflow.com/questions/28018974/binding-matrix-arrays-to-wpf-datagrid-->
-        <StackPanel Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Orientation="Vertical">
-            <TextBlock Text="DataMatrix Stackoverflow" Margin="15,0,0,0" FontWeight="Bold"/>
-            <DataGrid   CanUserAddRows="False"  Margin="10" BorderBrush="Black" BorderThickness="1">
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="{x:Type DataGridColumnHeader}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <RotateTransform Angle="270" />
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
-
-                <!--<DataGridTemplateColumn>
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox Name="chkBxSelect" 
-                    HorizontalAlignment="Center" 
-                    VerticalAlignment="Center"
-                  IsChecked="{Binding Path=Select, Mode=TwoWay}">
-                            </CheckBox>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-
-                </DataGridTemplateColumn>-->
-                <DataGrid.ItemsSource>
-                    <MultiBinding Converter="{StaticResource MatrixToDataViewConverter}">
-                        <Binding Path="ColumnHeaders"/>
-                        <Binding Path="RowHeaders"/>
-                        <Binding Path="Values"/>
-                    </MultiBinding>
-                </DataGrid.ItemsSource>
-            </DataGrid>
-        </StackPanel>
-
-
-        <StackPanel Name="MultiComparerOfPaints"
-                    Grid.Column="2" Grid.Row="2"  Orientation="Vertical">
-            <TextBlock Text="Multicomparer of paints" Margin="15,0,0,0" FontWeight="Bold"/>
-            <ListView ItemsSource="{Binding ComparisonMatrix}" Margin="10" FontFamily="Cascadia Code" BorderBrush="Black" BorderThickness="1">
-                <ListView.Resources>
-                    <!--<DataTemplate>
-                        <CheckBox IsChecked="{Binding Matrix.Values}"/>
-                    </DataTemplate>-->
-                </ListView.Resources>
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Unique ingredient" DisplayMemberBinding="{Binding ColorIngredient}" Width="200"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
-
     </Grid>
 </Window>

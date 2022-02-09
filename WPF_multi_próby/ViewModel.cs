@@ -23,31 +23,14 @@ namespace WPF_multi_próby
         }
         #endregion
 
-        #region Zrodla mojej kontrolki
-        private ObservableCollection<MatrixLine> comparisonMatrix;
-        public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
-        #endregion
-
-        #region zrodla kontrolki StackOverFlow
-        private ObservableCollection<ObservableCollection<bool>> values;
-        public ObservableCollection<ObservableCollection<bool>> Values { get { return values; } }
-        public ObservableCollection<MatrixLine> RowHeaders { get { return comparisonMatrix; } }
-        public ObservableCollection<MixedPaint> ColumnHeaders { get { return mixedPaints; } }
-
-        #endregion
-
-        #region zrodla kontrolki CodeProject
-        protected override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
-        protected override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
-        protected override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
-        #endregion
-
-        #region baza kolorow i mieszanin
-        private ObservableCollection<ColorBase> baseColors;
-        public ObservableCollection<ColorBase> BaseColors { get { return baseColors; } }
 
         private ObservableCollection<MixedPaint> mixedPaints;
-        public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
+        public override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
+
+        private ObservableCollection<ColorBase> baseColors;
+        public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
+        public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
+
 
         private MixedPaint? selectedMixedPaint;
         public MixedPaint? SelectedMixedPaint
@@ -59,7 +42,6 @@ namespace WPF_multi_próby
                 OnPropertyChanged(nameof(SelectedMixedPaint));
             }
         }
-        #endregion
 
         public ViewModel()
         {
@@ -97,43 +79,6 @@ namespace WPF_multi_próby
 
             newIgredients = new ObservableCollection<ColorBase>();
             #endregion
-
-            #region zrodla danych mojej kontrolki oraz z stackoverflow
-            List<ColorBase> uniqueColorsBase = new List<ColorBase>();
-
-            foreach (var item in mixedPaints)
-                foreach (var item2 in item.Ingredients)
-                    if (!uniqueColorsBase.Contains(item2))
-                        uniqueColorsBase.Add(item2);
-
-            uniqueColorsBase = uniqueColorsBase.OrderBy(o => o.Name).ThenBy(o => o.Saturation).ToList();
-
-            comparisonMatrix = new ObservableCollection<MatrixLine>();
-
-            foreach (var color in uniqueColorsBase)
-            {
-                MatrixLine line = new MatrixLine(color);
-                foreach (var mixed in mixedPaints)
-                    line.AddToMatrix(mixed);
-
-                comparisonMatrix.Add(line);
-            }
-            #endregion
-
-            #region zrodla danych kontrolki stackoverflow
-            values = new ObservableCollection<ObservableCollection<bool>>();
-            foreach (var item in comparisonMatrix)
-            {
-                ObservableCollection<bool> oc = new ObservableCollection<bool>();
-
-                foreach (var item2 in item.Matrix)
-                    oc.Add(item2.Value);
-
-                values.Add(oc);
-            }
-            #endregion
-
-           
         }
 
         #region  dodawanie nowego koloru
@@ -153,13 +98,34 @@ namespace WPF_multi_próby
             ViewModel vm = color as ViewModel;
 
             baseColors.Add(new ColorBase(vm.NewColorName, Int32.Parse(vm.NewColorSaturation)));
+            NewColorSaturation = "";
+            NewColorName = "";
         }
-        public string NewColorName { get; set; }
-        public string NewColorSaturation { get; set; }
+        private string newColorName;
+        public string NewColorName
+        {
+            get { return newColorName; }
+            set { newColorName = value;
+                OnPropertyChanged(nameof(NewColorName)); }
+        }
+
+        private string newColorSaturation;
+        public string NewColorSaturation 
+        {
+            get { return newColorSaturation; }
+            set { newColorSaturation = value;
+                OnPropertyChanged(nameof(NewColorSaturation)); } 
+        }
         #endregion
 
         #region dodawanie nowej farbki
-        public string NewMixedPaintName { get; set; }
+        private string newMixedPaintNaame;
+        public string NewMixedPaintName 
+        { 
+            get { return newMixedPaintNaame; }
+            set { newMixedPaintNaame = value;
+                OnPropertyChanged(nameof(NewMixedPaintName)); }
+        }
         private ObservableCollection<ColorBase> newIgredients;
         public ObservableCollection<ColorBase> NewIgredients { get { return newIgredients; } }
         private ColorBase selectedColorToAdd;
@@ -209,7 +175,9 @@ namespace WPF_multi_próby
                     mixed.AddIngredient(item);
 
                 mixedPaints.Add(mixed);
-            }             
+            }
+            newIgredients.Clear();
+            NewMixedPaintName = "";
         }
         #endregion
     }

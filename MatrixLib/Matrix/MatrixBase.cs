@@ -25,13 +25,13 @@ namespace MatrixLib.Matrix
         /// Child classes must override this method to return a listing of
         /// all entities that are to be displayed in the matrix column headers.
         /// </summary>
-        protected abstract IEnumerable<TColumn> GetColumnHeaderValues { get; }
+        public abstract IEnumerable<TColumn> GetColumnHeaderValues { get; }
 
         /// <summary>
         /// Child classes must override this method to return a listing of
         /// all entities that are to be displayed in the matrix row headers.
         /// </summary>
-        protected abstract IEnumerable<TRow> GetRowHeaderValues { get; }
+        public abstract IEnumerable<TRow> GetRowHeaderValues { get; }
 
         /// <summary>
         /// Child classes must override this method to provide the value of
@@ -40,7 +40,7 @@ namespace MatrixLib.Matrix
         /// </summary>
         /// <param name="rowHeaderValue">The value of the cell's row header.</param>
         /// <param name="columnHeaderValue">The value of the cell's column header.</param>
-        protected abstract object GetCellValue(TRow rowHeaderValue, TColumn columnHeaderValue);
+        public abstract object GetCellValue(TRow rowHeaderValue, TColumn columnHeaderValue);
 
         #endregion // Abstract Methods
 
@@ -53,7 +53,7 @@ namespace MatrixLib.Matrix
         {
             get
             {
-                if (_matrixItems == null)
+                //if (_matrixItems == null)
                     _matrixItems = new ReadOnlyCollection<MatrixItemBase>(this.BuildMatrix());
 
                 return _matrixItems;

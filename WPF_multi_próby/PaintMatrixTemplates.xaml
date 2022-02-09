@@ -43,7 +43,11 @@
 
     <!-- MatrixEmptyHeaderItem -->
     <DataTemplate DataType="{x:Type mx:MatrixEmptyHeaderItem}">
-        <Border Background="DarkGray" />
+        <Border Background="DarkGray">
+            <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight">
+                <TextBlock Text="----" />
+            </StackPanel>
+        </Border>
     </DataTemplate>
     
     <!-- MatrixCellItem -->
