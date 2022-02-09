@@ -25,13 +25,13 @@ namespace MatrixLib.Matrix
         /// Child classes must override this method to return a listing of
         /// all entities that are to be displayed in the matrix column headers.
         /// </summary>
-        protected abstract IEnumerable<TColumn> GetColumnHeaderValues();
+        protected abstract IEnumerable<TColumn> GetColumnHeaderValues { get; }
 
         /// <summary>
         /// Child classes must override this method to return a listing of
         /// all entities that are to be displayed in the matrix row headers.
         /// </summary>
-        protected abstract IEnumerable<TRow> GetRowHeaderValues();
+        protected abstract IEnumerable<TRow> GetRowHeaderValues { get; }
 
         /// <summary>
         /// Child classes must override this method to provide the value of
@@ -54,9 +54,8 @@ namespace MatrixLib.Matrix
             get
             {
                 if (_matrixItems == null)
-                {
                     _matrixItems = new ReadOnlyCollection<MatrixItemBase>(this.BuildMatrix());
-                }
+
                 return _matrixItems;
             }
         }
@@ -70,8 +69,8 @@ namespace MatrixLib.Matrix
             List<MatrixItemBase> matrixItems = new List<MatrixItemBase>();
 
             // Get the column and row header values from the child class.
-            List<TColumn> columnHeaderValues = this.GetColumnHeaderValues().ToList();
-            List<TRow> rowHeaderValues = this.GetRowHeaderValues().ToList();
+            List<TColumn> columnHeaderValues = this.GetColumnHeaderValues.ToList();
+            List<TRow> rowHeaderValues = this.GetRowHeaderValues.ToList();
 
             this.CreateEmptyHeader(matrixItems);
             this.CreateColumnHeaders(matrixItems, columnHeaderValues);

@@ -37,12 +37,11 @@ namespace WPF_multi_próby
         #endregion
 
         #region zrodla kontrolki CodeProject
-        readonly MatrixLine[] matrixLines;
-        readonly MixedPaint[] mixedPaints2;
-        readonly ColorBase[] colorBases;
-
-        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
-        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines; }
+        //readonly MatrixLine[] matrixLines;
+        //readonly MixedPaint[] mixedPaints2;
+        //readonly ColorBase[] colorBases;
+        protected override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
+        protected override ObservableCollection<MatrixLine> GetRowHeaderValues { get { return comparisonMatrix; } }
         protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) { return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
         #endregion
 
@@ -57,8 +56,11 @@ namespace WPF_multi_próby
         public MixedPaint? SelectedMixedPaint
         {
             get { return selectedMixedPaint; }
-            set { selectedMixedPaint = value;
-                OnPropertyChanged(nameof(SelectedMixedPaint)); }
+            set
+            {
+                selectedMixedPaint = value;
+                OnPropertyChanged(nameof(SelectedMixedPaint));
+            }
         }
         #endregion
 
@@ -128,39 +130,38 @@ namespace WPF_multi_próby
                 ObservableCollection<bool> oc = new ObservableCollection<bool>();
 
                 foreach (var item2 in item.Matrix)
-                {
                     oc.Add(item2.Value);
-                }
+
                 values.Add(oc);
             }
             #endregion
 
             #region zrodla danych kontrolki CodeProject
-            colorBases = new ColorBase[7];
-            colorBases[0] = yellowA;
-            colorBases[1] = yellowB;
-            colorBases[2] = blueA;
-            colorBases[3] = blueB;
-            colorBases[4] = redA;
-            colorBases[5] = redB;
-            colorBases[6] = whiteA;
+            //colorBases = new ColorBase[7];
+            //colorBases[0] = yellowA;
+            //colorBases[1] = yellowB;
+            //colorBases[2] = blueA;
+            //colorBases[3] = blueB;
+            //colorBases[4] = redA;
+            //colorBases[5] = redB;
+            //colorBases[6] = whiteA;
 
-            mixedPaints2 = new MixedPaint[5];
-            mixedPaints2[0] = violet;
-            mixedPaints2[1] = greenA;
-            mixedPaints2[2] = greenB;
-            mixedPaints2[3] = orangeA;
-            mixedPaints2[4] = orangeB;
+            //mixedPaints2 = new MixedPaint[5];
+            //mixedPaints2[0] = violet;
+            //mixedPaints2[1] = greenA;
+            //mixedPaints2[2] = greenB;
+            //mixedPaints2[3] = orangeA;
+            //mixedPaints2[4] = orangeB;
 
-            matrixLines = new MatrixLine[7];
-            for (int i = 0; i < colorBases.Length; i++)
-            {
-                MatrixLine line = new MatrixLine(colorBases[i]);
-                foreach (var mixed in mixedPaints)
-                    line.AddToMatrix(mixed);
+            //matrixLines = new MatrixLine[7];
+            //for (int i = 0; i < colorBases.Length; i++)
+            //{
+            //    MatrixLine line = new MatrixLine(colorBases[i]);
+            //    foreach (var mixed in mixedPaints)
+            //        line.AddToMatrix(mixed);
 
-                matrixLines[i] = line;
-            }
+            //    matrixLines[i] = line;
+            //}
             #endregion
         }
 
@@ -171,9 +172,7 @@ namespace WPF_multi_próby
             get
             {
                 if (addNewColorCommand == null)
-                {
                     addNewColorCommand = new RelayCommand(AddNewColor, o => !String.IsNullOrEmpty(NewColorName) && !String.IsNullOrEmpty(NewColorSaturation));
-                }
                 return addNewColorCommand;
             }
         }
@@ -208,18 +207,14 @@ namespace WPF_multi_próby
             get
             {
                 if (addSelectedColorToNewMixedPaint == null)
-                {
                     addSelectedColorToNewMixedPaint = new RelayCommand(AddNewIgredientToNewMixedPaint, o => selectedColorToAdd != null);
-                }
                 return addSelectedColorToNewMixedPaint;
             }
         }
         private void AddNewIgredientToNewMixedPaint(object o)
         {
             if (SelectedColorToAdd != null)
-            {
                 newIgredients.Add(selectedColorToAdd);
-            }
         }
 
         private ICommand addNewMixedPaintToListCommand;
@@ -228,9 +223,7 @@ namespace WPF_multi_próby
             get
             {
                 if (addNewMixedPaintToListCommand == null)
-                {
-                    addNewMixedPaintToListCommand = new RelayCommand(AddNewMixedPaintToList, o => !String.IsNullOrEmpty(NewMixedPaintName) && newIgredients.Count>0);
-                }
+                    addNewMixedPaintToListCommand = new RelayCommand(AddNewMixedPaintToList, o => !String.IsNullOrEmpty(NewMixedPaintName) && newIgredients.Count > 0);
                 return addNewMixedPaintToListCommand;
             }
         }
@@ -242,12 +235,22 @@ namespace WPF_multi_próby
 
                 MixedPaint mixed = new MixedPaint(vm.NewMixedPaintName);
                 foreach (var item in newIgredients)
-                {
                     mixed.AddIngredient(item);
-                }
+
                 mixedPaints.Add(mixed);
             }
+            comparisonMatrix.Clear();
 
+            foreach (var item in baseColors)
+            {
+                MatrixLine ml = new MatrixLine(item);
+                foreach (var item2 in mixedPaints)
+                {
+                    ml.AddToMatrix(item2);
+                }
+                comparisonMatrix.Add(ml);
+            }
+            
         }
         #endregion
     }
