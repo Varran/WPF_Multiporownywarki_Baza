@@ -14,50 +14,57 @@ namespace WPF_multi_próby
 
     public class ViewModel : MatrixBase<MatrixLine, MixedPaint>, INotifyPropertyChanged
     {
+        #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
         private void OnPropertyChanged(string name)
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(name));
         }
+        #endregion
 
+        #region Zrodla mojej kontrolki
+        private ObservableCollection<MatrixLine> comparisonMatrix;
+        public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
+        #endregion
+
+        #region zrodla kontrolki StackOverFlow
+        private ObservableCollection<ObservableCollection<bool>> values;
+        public ObservableCollection<ObservableCollection<bool>> Values { get { return values; } }
+        public ObservableCollection<MatrixLine> RowHeaders { get { return comparisonMatrix; } }
+        public ObservableCollection<MixedPaint> ColumnHeaders { get { return mixedPaints; } }
+
+        #endregion
+
+        #region zrodla kontrolki CodeProject
+        readonly MatrixLine[] matrixLines;
+        readonly MixedPaint[] mixedPaints2;
+        readonly ColorBase[] colorBases;
+
+        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
+        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines; }
+        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) { return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
+        #endregion
+
+        #region baza kolorow i mieszanin
         private ObservableCollection<ColorBase> baseColors;
         public ObservableCollection<ColorBase> BaseColors { get { return baseColors; } }
 
         private ObservableCollection<MixedPaint> mixedPaints;
         public ObservableCollection<MixedPaint> MixedPaints { get { return mixedPaints; } }
 
-
         private MixedPaint? selectedMixedPaint;
         public MixedPaint? SelectedMixedPaint
         {
             get { return selectedMixedPaint; }
-            set
-            {
-                selectedMixedPaint = value;
-                OnPropertyChanged(nameof(SelectedMixedPaint));
-            }
+            set { selectedMixedPaint = value;
+                OnPropertyChanged(nameof(SelectedMixedPaint)); }
         }
-
-        private ObservableCollection<ObservableCollection<bool>> values;
-        public ObservableCollection<ObservableCollection<bool>> Values { get { return values; } }
-        public ObservableCollection<MatrixLine> RowHeaders { get { return comparisonMatrix; } }
-        public ObservableCollection<MixedPaint> ColumnHeaders { get { return mixedPaints; } }
-
-        private ObservableCollection<MatrixLine> comparisonMatrix;
-        public ObservableCollection<MatrixLine> ComparisonMatrix { get { return comparisonMatrix; } }
-
-
-        readonly MatrixLine[] matrixLines;
-        readonly MixedPaint[] mixedPaints2;
-        readonly ColorBase[] colorBases;
-
-        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) { return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
-        protected override IEnumerable<MixedPaint> GetColumnHeaderValues() { return mixedPaints; }
-        protected override IEnumerable<MatrixLine> GetRowHeaderValues() { return matrixLines; }
+        #endregion
 
         public ViewModel()
         {
+            #region zrodla danych dla bazy kolorow i mieszanin
             ColorBase yellowA = new ColorBase("Yellow A", 110);
             ColorBase yellowB = new ColorBase("Yellow B", 175);
             ColorBase blueA = new ColorBase("Blue A", 77);
@@ -88,6 +95,11 @@ namespace WPF_multi_próby
             mixedPaints = new ObservableCollection<MixedPaint>() { greenA, greenB, orangeA, orangeB, violet };
             SelectedMixedPaint = greenA;
 
+
+            newIgredients = new ObservableCollection<ColorBase>();
+            #endregion
+
+            #region zrodla danych mojej kontrolki oraz z stackoverflow
             List<ColorBase> uniqueColorsBase = new List<ColorBase>();
 
             foreach (var item in mixedPaints)
@@ -107,7 +119,9 @@ namespace WPF_multi_próby
 
                 comparisonMatrix.Add(line);
             }
+            #endregion
 
+            #region zrodla danych kontrolki stackoverflow
             values = new ObservableCollection<ObservableCollection<bool>>();
             foreach (var item in comparisonMatrix)
             {
@@ -119,7 +133,9 @@ namespace WPF_multi_próby
                 }
                 values.Add(oc);
             }
+            #endregion
 
+            #region zrodla danych kontrolki CodeProject
             colorBases = new ColorBase[7];
             colorBases[0] = yellowA;
             colorBases[1] = yellowB;
@@ -145,8 +161,7 @@ namespace WPF_multi_próby
 
                 matrixLines[i] = line;
             }
-
-            newIgredients = new ObservableCollection<ColorBase>();
+            #endregion
         }
 
         #region  dodawanie nowego koloru
