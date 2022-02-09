@@ -12,7 +12,7 @@ namespace WPF_multi_próby
 {
     //https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF
 
-    public class ViewModel : MatrixBase<MatrixLine, MixedPaint>, INotifyPropertyChanged
+    public class ViewModel : MatrixBase<ColorBase, MixedPaint>, INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -37,12 +37,9 @@ namespace WPF_multi_próby
         #endregion
 
         #region zrodla kontrolki CodeProject
-        //readonly MatrixLine[] matrixLines;
-        //readonly MixedPaint[] mixedPaints2;
-        //readonly ColorBase[] colorBases;
         protected override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
-        protected override ObservableCollection<MatrixLine> GetRowHeaderValues { get { return comparisonMatrix; } }
-        protected override object GetCellValue(MatrixLine rowHeaderValue, MixedPaint columnHeaderValue) { return rowHeaderValue.Matrix[columnHeaderValue.PaintName]; }
+        protected override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
+        protected override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
         #endregion
 
         #region baza kolorow i mieszanin
@@ -136,33 +133,7 @@ namespace WPF_multi_próby
             }
             #endregion
 
-            #region zrodla danych kontrolki CodeProject
-            //colorBases = new ColorBase[7];
-            //colorBases[0] = yellowA;
-            //colorBases[1] = yellowB;
-            //colorBases[2] = blueA;
-            //colorBases[3] = blueB;
-            //colorBases[4] = redA;
-            //colorBases[5] = redB;
-            //colorBases[6] = whiteA;
-
-            //mixedPaints2 = new MixedPaint[5];
-            //mixedPaints2[0] = violet;
-            //mixedPaints2[1] = greenA;
-            //mixedPaints2[2] = greenB;
-            //mixedPaints2[3] = orangeA;
-            //mixedPaints2[4] = orangeB;
-
-            //matrixLines = new MatrixLine[7];
-            //for (int i = 0; i < colorBases.Length; i++)
-            //{
-            //    MatrixLine line = new MatrixLine(colorBases[i]);
-            //    foreach (var mixed in mixedPaints)
-            //        line.AddToMatrix(mixed);
-
-            //    matrixLines[i] = line;
-            //}
-            #endregion
+           
         }
 
         #region  dodawanie nowego koloru
@@ -238,19 +209,7 @@ namespace WPF_multi_próby
                     mixed.AddIngredient(item);
 
                 mixedPaints.Add(mixed);
-            }
-            comparisonMatrix.Clear();
-
-            foreach (var item in baseColors)
-            {
-                MatrixLine ml = new MatrixLine(item);
-                foreach (var item2 in mixedPaints)
-                {
-                    ml.AddToMatrix(item2);
-                }
-                comparisonMatrix.Add(ml);
-            }
-            
+            }             
         }
         #endregion
     }
