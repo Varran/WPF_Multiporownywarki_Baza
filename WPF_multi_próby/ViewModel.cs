@@ -12,7 +12,7 @@ namespace WPF_multi_próby
 {
     //https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF
 
-    public class ViewModel : MatrixBase<ColorBase, MixedPaint>, INotifyPropertyChanged
+    public class ViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -23,13 +23,17 @@ namespace WPF_multi_próby
         }
         #endregion
 
+        private MatrycaViewModel matryca;
+        public MatrycaViewModel Matryca
+        {
+            get { return matryca; }
+            set { matryca = value;
+                OnPropertyChanged(nameof(Matryca)); }
+        }
 
         private ObservableCollection<MixedPaint> mixedPaints;
-        public override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
 
         private ObservableCollection<ColorBase> baseColors;
-        public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
-        public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
 
 
         private MixedPaint? selectedMixedPaint;
@@ -79,6 +83,8 @@ namespace WPF_multi_próby
 
             newIgredients = new ObservableCollection<ColorBase>();
             #endregion
+
+            Matryca = new MatrycaViewModel(mixedPaints, baseColors);
         }
 
         #region  dodawanie nowego koloru
@@ -100,6 +106,7 @@ namespace WPF_multi_próby
             baseColors.Add(new ColorBase(vm.NewColorName, Int32.Parse(vm.NewColorSaturation)));
             NewColorSaturation = "";
             NewColorName = "";
+            Matryca = new MatrycaViewModel(mixedPaints, baseColors);
         }
         private string newColorName;
         public string NewColorName
@@ -178,7 +185,23 @@ namespace WPF_multi_próby
             }
             newIgredients.Clear();
             NewMixedPaintName = "";
+            matryca = new MatrycaViewModel(mixedPaints, baseColors);
         }
         #endregion
+    }
+
+    public class MatrycaViewModel : MatrixBase<ColorBase, MixedPaint>
+    {
+        private ObservableCollection<MixedPaint> mixedPaints;
+
+        private ObservableCollection<ColorBase> baseColors;
+        public MatrycaViewModel(ObservableCollection<MixedPaint> farbki, ObservableCollection<ColorBase> kolory)
+        {
+            this.mixedPaints = farbki;
+            this.baseColors = kolory;
+        }
+        public override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
+        public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
+        public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
     }
 }

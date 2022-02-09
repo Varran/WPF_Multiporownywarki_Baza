@@ -61,6 +61,8 @@ namespace WPF_multi_próby
         }
     }
 
+
+    //wczesniej uzywny do innych prob na innej ontrolce - powiazany z converterem
     public class MatrixLine
     {
         public ColorBase ColorIngredient { get; private set; }
