@@ -107,6 +107,8 @@ namespace WPF_multi_próby
             NewColorSaturation = "";
             NewColorName = "";
             Matryca = new MatrycaViewModel(mixedPaints, baseColors);
+
+            OnPropertyChanged(nameof(Matryca));
         }
         private string newColorName;
         public string NewColorName
@@ -159,6 +161,8 @@ namespace WPF_multi_próby
         {
             if (SelectedColorToAdd != null)
                 newIgredients.Add(selectedColorToAdd);
+
+            OnPropertyChanged(nameof(Matryca));
         }
 
         private ICommand addNewMixedPaintToListCommand;
@@ -186,6 +190,7 @@ namespace WPF_multi_próby
             newIgredients.Clear();
             NewMixedPaintName = "";
             matryca = new MatrycaViewModel(mixedPaints, baseColors);
+            OnPropertyChanged(nameof(Matryca));
         }
         #endregion
     }
