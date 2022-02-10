@@ -12,6 +12,25 @@ namespace WPF_multi_próby
 {
     //https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF
 
+    public class MatrycaViewModel : MatrixBase<ColorBase, MixedPaint>
+    {
+        public MatrycaViewModel(ObservableCollection<MixedPaint> farbki, ObservableCollection<ColorBase> kolory)
+        {
+            this.mixedPaints = farbki;
+            this.baseColors = kolory;
+        }
+
+
+        private ObservableCollection<MixedPaint> mixedPaints;
+        public override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
+
+
+        private ObservableCollection<ColorBase> baseColors;
+        public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
+
+        public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
+    }
+
     public class ViewModel : INotifyPropertyChanged
     {
         #region INotifyPropertyChanged
@@ -195,18 +214,5 @@ namespace WPF_multi_próby
         #endregion
     }
 
-    public class MatrycaViewModel : MatrixBase<ColorBase, MixedPaint>
-    {
-        private ObservableCollection<MixedPaint> mixedPaints;
 
-        private ObservableCollection<ColorBase> baseColors;
-        public MatrycaViewModel(ObservableCollection<MixedPaint> farbki, ObservableCollection<ColorBase> kolory)
-        {
-            this.mixedPaints = farbki;
-            this.baseColors = kolory;
-        }
-        public override ObservableCollection<MixedPaint> GetColumnHeaderValues { get { return mixedPaints; } }
-        public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
-        public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
-    }
 }

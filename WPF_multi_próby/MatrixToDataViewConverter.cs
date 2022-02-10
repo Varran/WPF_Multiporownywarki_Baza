@@ -19,7 +19,7 @@ namespace WPF_multi_próby
             var rows = values[1] as ObservableCollection<MatrixLine>;
             var vals = values[2] as ObservableCollection<ObservableCollection<bool>>;
 
-            myDataTable.Columns.Add("---");    
+            myDataTable.Columns.Add("-z convertera-");    
 
             if (colums != null)
                 foreach (var value in colums)
