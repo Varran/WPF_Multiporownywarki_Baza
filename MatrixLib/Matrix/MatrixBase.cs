@@ -58,13 +58,17 @@ namespace MatrixLib.Matrix
 
                 return _matrixItems;
             }
+            set
+            {
+                _matrixItems = value;
+            }
         }
 
         #endregion // MatrixItems
 
         #region Matrix Construction
 
-        List<MatrixItemBase> BuildMatrix()
+        virtual protected List<MatrixItemBase> BuildMatrix()
         {
             List<MatrixItemBase> matrixItems = new List<MatrixItemBase>();
 
@@ -80,7 +84,7 @@ namespace MatrixLib.Matrix
             return matrixItems;
         }
 
-        void CreateEmptyHeader(List<MatrixItemBase> matrixItems)
+        protected void CreateEmptyHeader(List<MatrixItemBase> matrixItems)
         {
             // Insert a blank item in the top left corner.
             matrixItems.Add(new MatrixEmptyHeaderItem
@@ -90,7 +94,7 @@ namespace MatrixLib.Matrix
             });
         }
 
-        void CreateColumnHeaders(List<MatrixItemBase> matrixItems, List<TColumn> columnHeaderValues)
+        protected void CreateColumnHeaders(List<MatrixItemBase> matrixItems, List<TColumn> columnHeaderValues)
         {
             // Insert the column header items in the first row.
             for (int column = 1; column <= columnHeaderValues.Count; ++column)
@@ -103,7 +107,7 @@ namespace MatrixLib.Matrix
             }
         }
 
-        void CreateRowHeaders(List<MatrixItemBase> matrixItems, List<TRow> rowHeaderValues)
+        protected void CreateRowHeaders(List<MatrixItemBase> matrixItems, List<TRow> rowHeaderValues)
         {
             // Insert the row headers items in the first slot 
             // of each row after the column header row.
@@ -117,7 +121,7 @@ namespace MatrixLib.Matrix
             }
         }
 
-        void CreateCells(List<MatrixItemBase> matrixItems, List<TRow> rowHeaderValues, List<TColumn> columnHeaderValues)
+        protected void CreateCells(List<MatrixItemBase> matrixItems, List<TRow> rowHeaderValues, List<TColumn> columnHeaderValues)
         {
             // Insert a cell item for each row/column intersection.
             for (int row = 1; row <= rowHeaderValues.Count; ++row)

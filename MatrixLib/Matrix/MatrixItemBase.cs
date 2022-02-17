@@ -5,7 +5,7 @@
     /// </summary>
     public abstract class MatrixItemBase
     {
-        public int GridRow { get; internal set; }
-        public int GridColumn { get; internal set; }
+        public int GridRow { get;  set; }
+        public int GridColumn { get;  set; }
     }
 }

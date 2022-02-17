@@ -19,9 +19,9 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="400"/>
+            <RowDefinition Height="1"/>
             <RowDefinition/>
-            <RowDefinition/>
-            <RowDefinition Height="270"/>
         </Grid.RowDefinitions>
         
         
@@ -117,16 +117,16 @@
         <!--https://www.codeproject.com/Articles/37241/Displaying-a-Data-Matrix-in-WPF-->
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
             <TextBlock Text="DataMatrix CodeProject" Margin="15,0,0,0" FontWeight="Bold"/>
-            <Grid >
-                <mx:MatrixControl ItemsSource="{Binding Path=Matryca.MatrixItems}" Margin="10" BorderBrush="Black" BorderThickness="1">
-                    <mx:MatrixControl.DataContext>
-                        <local:ViewModel />
-                    </mx:MatrixControl.DataContext>
-                    <mx:MatrixControl.Resources>
-                        <ResourceDictionary Source="PaintMatrixTemplates.xaml" />
-                    </mx:MatrixControl.Resources>
-                </mx:MatrixControl>
-            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Grid >
+                    <mx:MatrixControl ItemsSource="{Binding Path=Matryca.MatrixItems}" Margin="10" BorderBrush="Black" BorderThickness="1">
+                        <mx:MatrixControl.Resources>
+                            <ResourceDictionary Source="PaintMatrixTemplates.xaml" />
+                        </mx:MatrixControl.Resources>
+                    </mx:MatrixControl>
+                </Grid>
+            </StackPanel>
         </StackPanel>
+        <StackPanel></StackPanel>
     </Grid>
 </Window>
