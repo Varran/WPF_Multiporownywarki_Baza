@@ -231,6 +231,7 @@ namespace WPF_multi_próby
                 OnPropertyChanged(nameof(SelectedColorToAdd));
             }
         }
+
         private ICommand addSelectedColorToNewMixedPaint;
         public ICommand AddSelectedColorToNewMixedPaint
         {
