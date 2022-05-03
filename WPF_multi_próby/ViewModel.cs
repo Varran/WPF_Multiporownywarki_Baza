@@ -29,6 +29,71 @@ namespace WPF_multi_próby
         public override ObservableCollection<ColorBase> GetRowHeaderValues { get { return baseColors; } }
 
         public override object GetCellValue(ColorBase rowHeaderValue, MixedPaint columnHeaderValue) { return columnHeaderValue.Ingredients.Contains(rowHeaderValue); }
+
+        public ViewModel Viewmodel { get; internal set; }
+
+        public new ReadOnlyCollection<MatrixItemBase> MatrixItems
+        {
+            get
+            {
+                //if (_matrixItems == null)
+                base.MatrixItems = new ReadOnlyCollection<MatrixItemBase>(BuildMatrix());
+
+                return base.MatrixItems;
+            }
+        }
+
+        protected override List<MatrixItemBase> BuildMatrix()
+        {
+            List<MatrixItemBase> matrixItems = new List<MatrixItemBase>();
+
+            // Get the column and row header values from the child class.
+            List<ColorBase> columnHeaderValues = GetRowHeaderValues.ToList();
+            List<MixedPaint> rowHeaderValues = GetColumnHeaderValues.ToList();
+
+            base.CreateEmptyHeader(matrixItems);
+            base.CreateColumnHeaders(matrixItems, rowHeaderValues);
+            base.CreateRowHeaders(matrixItems, columnHeaderValues);
+            CreateCells(matrixItems, columnHeaderValues, rowHeaderValues);
+
+            return matrixItems;
+        }
+
+        protected new void CreateCells(List<MatrixItemBase> matrixItems, List<ColorBase> rowHeaderValues, List<MixedPaint> columnHeaderValues)
+        {
+            // Insert a cell item for each row/column intersection.
+            for (int row = 1; row <= rowHeaderValues.Count; ++row)
+            {
+                ColorBase rowHeaderValue = rowHeaderValues[row - 1];
+
+                for (int column = 1; column <= columnHeaderValues.Count; ++column)
+                {
+                    // Ask the child class for the cell's value.
+                    object cellValue = this.GetCellValue(rowHeaderValue, columnHeaderValues[column - 1]);
+                    MatrixCellItem cell = (new MatrixCellItem(cellValue)
+                    {
+                        GridRow = row,
+                        GridColumn = column
+                    });
+                    cell.NotifyChange += Cell_Change;
+                    matrixItems.Add(cell);
+                }
+            }
+        }
+
+        private void Cell_Change(object sender, EventArgs e)
+        {
+            MatrixCellItem cell = (MatrixCellItem)sender;
+            ColorBase color = GetRowHeaderValues[cell.GridRow - 1];
+            if (GetColumnHeaderValues[cell.GridColumn - 1].Ingredients.Contains(color))
+            {
+                GetColumnHeaderValues[cell.GridColumn - 1].Ingredients.Remove(color);
+            }
+            else
+            {
+                GetColumnHeaderValues[cell.GridColumn - 1].Ingredients.Add(color);
+            }
+        }
     }
 
     public class ViewModel : INotifyPropertyChanged
@@ -46,7 +111,7 @@ namespace WPF_multi_próby
         public MatrycaViewModel Matryca
         {
             get { return matryca; }
-            set { matryca = value;
+            set { matryca = value; matryca.Viewmodel = this;
                 OnPropertyChanged(nameof(Matryca)); }
         }
 
